@@ -35,6 +35,9 @@ public class WorldGenerator {
     private int minCopperCount;
     private int maxCopperCount;
 
+    private int minMagnetCount;
+    private int maxMagnetCount;
+
     private static final int DEFAULT_WORLD_SIZE = 16;
 
     /**
@@ -52,6 +55,10 @@ public class WorldGenerator {
         maxIronCount = config.getInt("wg_maxIronCount");
         minCopperCount = config.getInt("wg_minCopperCount");
         maxCopperCount = config.getInt("wg_maxCopperCount");
+        //config file error?
+        minMagnetCount = config.getInt("wg_minMagnetCount");
+        maxMagnetCount = config.getInt("wg_maxMagnetCount");
+
     }
 
     /**
@@ -167,6 +174,8 @@ public class WorldGenerator {
         int ironCount = random.nextInt(maxIronCount - minIronCount) + minIronCount;
         int copperCount = random.nextInt(maxCopperCount - minCopperCount) + minCopperCount;
 
+        int magnetCount = random.nextInt(maxMagnetCount - minMagnetCount) + minMagnetCount;
+
         for (int i = 0; i < ironCount; i++) {
 
             Point p = world.getTileMap().getRandomTile(TilePlain.ID);
@@ -181,6 +190,15 @@ public class WorldGenerator {
 
             if (p != null) {
                 world.getTileMap().setTileAt(new TileCopper(), p.x, p.y);
+            }
+        }
+
+        for (int i = 0; i < magnetCount; i++) {
+
+            Point p = world.getTileMap().getRandomTile(TilePlain.ID);
+
+            if (p != null) {
+                world.getTileMap().setTileAt(new TileMagnet(), p.x, p.y);
             }
         }
 
