@@ -6,6 +6,8 @@ let RENDERER_HEIGHT = (window.innerHeight / 1.40) * window.devicePixelRatio;
 let DEBUG: boolean = true;
 
 let config = {
+    textShortCircuit: "#6242f4",
+    tileShortCircuitTint:0xFFFFFF,
     portalTint: 0xff43c8,
     tileTint: 0xFFFFFF,
     wallTint: 0xDDDDDD,
@@ -240,4 +242,3 @@ class Debug {
 DEBUG = false;
 
 let mar = new MarGame();
-
