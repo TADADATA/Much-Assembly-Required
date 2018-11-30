@@ -29,6 +29,7 @@ public class World implements MongoSerializable {
     private static final char INFO_BLOCKED = 0x8000;
     private static final char INFO_IRON = 0x0200;
     private static final char INFO_COPPER = 0x0100;
+    private static final char INFO_PUDDLE = 0x0250;
 
     private int x;
     private int y;
@@ -273,6 +274,9 @@ public class World implements MongoSerializable {
 
                 } else if (tileMap.getTileIdAt(x, y) == TileIron.ID) {
                     mapInfo[x][y] = INFO_IRON;
+                
+                }else if (tileMap.getTileIdAt(x, y) == TilePuddle.ID) {
+                    mapInfo[x][y] = INFO_PUDDLE;
                 }
             }
         }
