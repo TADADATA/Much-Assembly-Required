@@ -34,7 +34,9 @@ public class WorldGenerator {
     private int maxIronCount;
     private int minCopperCount;
     private int maxCopperCount;
-
+    private int minPuddleCount;
+    private int maxPuddleCount;
+    
     private static final int DEFAULT_WORLD_SIZE = 16;
 
     /**
@@ -52,6 +54,8 @@ public class WorldGenerator {
         maxIronCount = config.getInt("wg_maxIronCount");
         minCopperCount = config.getInt("wg_minCopperCount");
         maxCopperCount = config.getInt("wg_maxCopperCount");
+        minPuddleCount = config.getInt("wg_minPuddleCount");
+        maxPuddleCount = config.getInt("wg_maxPuddleCount");
     }
 
     /**
@@ -166,6 +170,7 @@ public class WorldGenerator {
         //Replace plain tiles by iron and copper tiles
         int ironCount = random.nextInt(maxIronCount - minIronCount) + minIronCount;
         int copperCount = random.nextInt(maxCopperCount - minCopperCount) + minCopperCount;
+        int puddleCount = random.nextInt(maxPuddleCount - minPuddleCount) + minPuddleCount;
 
         for (int i = 0; i < ironCount; i++) {
 
@@ -183,7 +188,14 @@ public class WorldGenerator {
                 world.getTileMap().setTileAt(new TileCopper(), p.x, p.y);
             }
         }
+        for (int i = 0; i < puddleCount; i++) {
 
+            Point p = world.getTileMap().getRandomTile(TilePlain.ID);
+
+            if (p != null) {
+                world.getTileMap().setTileAt(new TilePuddle(), p.x, p.y);
+            }
+        }
         GameEvent event = new WorldGenerationEvent(world);
         GameServer.INSTANCE.getEventDispatcher().dispatch(event);
         if (event.isCancelled()) {
