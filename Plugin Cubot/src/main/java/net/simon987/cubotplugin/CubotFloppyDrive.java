@@ -1,11 +1,13 @@
 package net.simon987.cubotplugin;
 
+import net.simon987.server.GameServer;
 import net.simon987.server.assembly.Status;
 import net.simon987.server.game.objects.ControllableUnit;
 import org.bson.Document;
+import net.simon987.server.game.world.*;
 
 public class CubotFloppyDrive extends CubotHardwareModule {
-
+    private final static int corruptionBlockSize = GameServer.INSTANCE.getConfig().getInt("magnetic_tile_corruption_size");
     /**
      * Hardware ID (Should be unique)
      */
@@ -37,6 +39,17 @@ public class CubotFloppyDrive extends CubotHardwareModule {
 
     @Override
     public void handleInterrupt(Status status) {
+
+
+        if(super.cubot.getWorld().getTileMap().getTileIdAt(super.cubot.getX(), super.cubot.getY()) == TileMagnet.ID){
+          System.out.println("on magnetic tile");
+          if(floppyDisk != null){
+            floppyDisk.corruptFloppyDisk(corruptionBlockSize);
+          }
+        }else{
+          System.out.println("not on magnetic tile");
+        }
+
         int a = getCpu().getRegisterSet().getRegister("A").getValue();
 
         if (a == FLOPPY_POLL) {
