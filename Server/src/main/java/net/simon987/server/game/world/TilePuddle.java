@@ -8,12 +8,4 @@ public class TilePuddle extends Tile {
         return ID;
     }
     
-    
-    public boolean isDead() { //not certain 
-        if(getMapInfo()==0x0250) {
-        	setDead(true);
-        	return true;
-        }
-        return false;
-    }
 }
