@@ -13,6 +13,7 @@ enum TileType {
     PLAIN,
     WALL,
     IRON,
+    PUDDLE,
     COPPER,
     VAULT_FLOOR,
     VAULT_WALL,
@@ -63,6 +64,8 @@ class Tile extends Phaser.Plugin.Isometric.IsoSprite {
                 return new WallTile(x, y);
             case TileType.IRON:
                 return new IronTile(x, y);
+            case TileType.PUDDLE:
+                  return new PuddleTile(x, y);
             case TileType.COPPER:
                 return new CopperTile(x, y);
             case TileType.VAULT_FLOOR:
@@ -209,6 +212,15 @@ class IronTile extends Tile {
     }
 }
 
+class PuddleTile extends Tile {
+     constructor(x: number, y: number) {
+        super(x, y, config.plainSprite, 0);
+        this.baseTint = config.tilePuddleTint;
+        this.tint = this.baseTint;
+        this.setText("PUDDLE", config.textPuddle);
+        this.tileType = "puddle";
+    }
+}
 
 class CopperTile extends Tile {
 
