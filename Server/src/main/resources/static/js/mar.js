@@ -264,6 +264,8 @@ var RENDERER_WIDTH = document.getElementById("game").clientWidth * window.device
 var RENDERER_HEIGHT = (window.innerHeight / 1.40) * window.devicePixelRatio;
 var DEBUG = true;
 var config = {
+    textMagnet: "#434341",// change color
+    tileMagnetTint: 0xFFFFFF,//change color
     portalTint: 0xff43c8,
     tileTint: 0xFFFFFF,
     wallTint: 0xDDDDDD,
@@ -284,7 +286,7 @@ var config = {
     hologramFill: "#0aced6",
     hologramStroke: "#12FFB0",
     copperFill: "#C87D38",
-    plainSprite: "tiles/tile",
+    plainSprite: "tiles/tile", //I'm gonna use this
     wallSprite: "tiles/bigTile",
     wallSprite2: "tiles/bigTile2",
     walkDuration: 800,
@@ -1433,6 +1435,7 @@ var TileType;
     TileType[TileType["VAULT_FLOOR"] = 4] = "VAULT_FLOOR";
     TileType[TileType["VAULT_WALL"] = 5] = "VAULT_WALL";
     TileType[TileType["FLUID"] = 6] = "FLUID";
+    TileType[TileType["MAGNETIC"] = 12] = "MAGNETIC";
 })(TileType || (TileType = {}));
 var Tile = (function (_super) {
     __extends(Tile, _super);
@@ -1460,6 +1463,8 @@ var Tile = (function (_super) {
                 return new VoidTile(x, y);
             case TileType.FLUID:
                 return new FluidTile(x, y);
+            case TileType.MAGNETIC:
+                return new MagneticTile(x, y);
             case TileType.PLAIN:
             default:
                 return new PlainTile(x, y);
@@ -1568,6 +1573,18 @@ var FluidTile = (function (_super) {
         return _this;
     }
     return FluidTile;
+}(Tile));
+var MagneticTile = (function (_super) {
+    __extends(MagneticTile, _super);
+    function MagneticTile(x, y) {
+        var _this = _super.call(this, x, y, config.plainSprite, 0) || this;
+        _this.baseTint = config.tileMagnetTint;
+        _this.tint = _this.baseTint;
+        _this.setText("MAGNETIC", config.textMagnet);
+        _this.tileType = "magnetic";
+        return _this;
+    }
+    return MagneticTile;
 }(Tile));
 var IronTile = (function (_super) {
     __extends(IronTile, _super);
