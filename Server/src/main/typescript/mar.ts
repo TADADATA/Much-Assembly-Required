@@ -21,6 +21,8 @@ let config = {
     tileHoverTint: 0x00FF00,
     itemIron: 0x434341,
     textIron: "#434341",
+    textPuddle: "#B4D8EE",
+    tilePuddleTint: 0xFFFFFF,
     itemCopper: 0xC87D38,
     textCopper: "#C87D38",
     hologramFill: "#0aced6",
