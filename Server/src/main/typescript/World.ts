@@ -16,7 +16,8 @@ enum TileType {
     COPPER,
     VAULT_FLOOR,
     VAULT_WALL,
-    FLUID
+    FLUID,
+    BIOFOOD
 }
 
 class Tile extends Phaser.Plugin.Isometric.IsoSprite {
@@ -61,6 +62,8 @@ class Tile extends Phaser.Plugin.Isometric.IsoSprite {
 
             case TileType.WALL:
                 return new WallTile(x, y);
+              case TileType.BIOFOOD:
+                  return new BiofoodTile(x, y);
             case TileType.IRON:
                 return new IronTile(x, y);
             case TileType.COPPER:
@@ -160,6 +163,18 @@ class VaultFloorTile extends Tile {
         this.tileType = "vault floor";
     }
 }
+
+class BiofoodTile extends Tile {
+
+    constructor(x: number, y: number) {
+        super(x, y, config.plainSprite, 0);
+
+        this.baseTint = config.tileTint;
+        this.tint = this.baseTint;
+        this.tileType = "biofood";
+    }
+}
+
 
 class VoidTile extends Tile {
 
@@ -454,5 +469,3 @@ class WorldArrow extends Phaser.Plugin.Isometric.IsoSprite {
     }
 
 }
-
-
