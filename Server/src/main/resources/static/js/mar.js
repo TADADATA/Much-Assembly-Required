@@ -267,6 +267,8 @@ var config = {
     portalTint: 0xff43c8,
     tileTint: 0xFFFFFF,
     wallTint: 0xDDDDDD,
+    textPuddle: "#B4D8EE",
+    tilePuddleTint:0xFFFFFF,
     vaultWallTint: 0x3F2D2A,
     vaultFloorTint: 0x2B1E1C,
     oreTint: 0xF3F3F3,
@@ -1433,6 +1435,8 @@ var TileType;
     TileType[TileType["VAULT_FLOOR"] = 4] = "VAULT_FLOOR";
     TileType[TileType["VAULT_WALL"] = 5] = "VAULT_WALL";
     TileType[TileType["FLUID"] = 6] = "FLUID";
+    TileType[TileType["PUDDLE"] = 14] = "PUDDLE";
+    
 })(TileType || (TileType = {}));
 var Tile = (function (_super) {
     __extends(Tile, _super);
@@ -1450,6 +1454,8 @@ var Tile = (function (_super) {
                 return new WallTile(x, y);
             case TileType.IRON:
                 return new IronTile(x, y);
+            case TileType.PUDDLE:
+                return new PuddleTile(x, y);
             case TileType.COPPER:
                 return new CopperTile(x, y);
             case TileType.VAULT_FLOOR:
@@ -1580,6 +1586,18 @@ var IronTile = (function (_super) {
         return _this;
     }
     return IronTile;
+}(Tile));
+var PuddleTile = (function (_super) {
+    __extends(PuddleTile, _super);
+    function PuddleTile(x, y) {
+        var _this = _super.call(this, x, y, config.plainSprite, 0) || this;
+        _this.baseTint = config.tilePuddleTint;
+        _this.tint = _this.baseTint;
+        _this.setText("PUDDLE", config.textPuddle);
+        _this.tileType = "puddle";
+        return _this;
+    }
+    return ShortCircuitTile;
 }(Tile));
 var CopperTile = (function (_super) {
     __extends(CopperTile, _super);
