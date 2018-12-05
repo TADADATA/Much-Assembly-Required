@@ -35,6 +35,9 @@ public class WorldGenerator {
     private int minCopperCount;
     private int maxCopperCount;
 
+    private int minBiofoodCount;
+    private int maxBiofoodCount;
+
     private static final int DEFAULT_WORLD_SIZE = 16;
 
     /**
@@ -52,6 +55,9 @@ public class WorldGenerator {
         maxIronCount = config.getInt("wg_maxIronCount");
         minCopperCount = config.getInt("wg_minCopperCount");
         maxCopperCount = config.getInt("wg_maxCopperCount");
+
+        minBiofoodCount = config.getInt("wg_minBiofoodCount");
+        maxBiofoodCount = config.getInt("wg_maxBiofoodCount");
     }
 
     /**
@@ -166,7 +172,16 @@ public class WorldGenerator {
         //Replace plain tiles by iron and copper tiles
         int ironCount = random.nextInt(maxIronCount - minIronCount) + minIronCount;
         int copperCount = random.nextInt(maxCopperCount - minCopperCount) + minCopperCount;
+        int biofoodCount = random.nextInt(maxBiofoodCount - minBiofoodCount) + minBiofoodCount;
 
+        for (int i = 0; i < biofoodCount; i++) {
+
+            Point p = world.getTileMap().getRandomTile(TilePlain.ID);
+
+            if (p != null) {
+                world.getTileMap().setTileAt(new TileBiofood(), p.x, p.y);
+            }
+        }
         for (int i = 0; i < ironCount; i++) {
 
             Point p = world.getTileMap().getRandomTile(TilePlain.ID);
