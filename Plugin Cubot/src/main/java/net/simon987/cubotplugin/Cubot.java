@@ -1,5 +1,7 @@
 package net.simon987.cubotplugin;
 
+
+
 import net.simon987.server.GameServer;
 import net.simon987.server.ServerConfiguration;
 import net.simon987.server.assembly.CPU;
@@ -13,6 +15,11 @@ import net.simon987.server.game.objects.*;
 import net.simon987.server.user.User;
 import org.bson.Document;
 import org.json.simple.JSONObject;
+
+import net.simon987.server.game.world.*;
+//import net.simon987.biomassplugin.ItemBiomass;
+
+
 
 import java.awt.*;
 import java.util.*;
@@ -228,6 +235,13 @@ public class Cubot extends GameObject implements Updatable, ControllableUnit, Me
         storeEnergy((int) (SOLAR_PANEL_MULTIPLIER * GameServer.INSTANCE.getDayNightCycle().getSunIntensity()));
 
         if (currentAction == Action.WALKING) {
+          int id= getWorld().getTileMap().getTileIdAt(getX(),getY());
+          if(id==TileBiofood.ID){
+            System.out.println("biofoodtile'da yurudum");
+            giveItem(GameServer.INSTANCE.getRegistry().makeItem(1));
+          }else{
+            System.out.println("baska bir yerde yurudum");
+          }
             if (spendEnergy(100)) {
                 if (!incrementLocation()) {
                     //Couldn't walk
@@ -463,7 +477,7 @@ public class Cubot extends GameObject implements Updatable, ControllableUnit, Me
 
     /**
      * Damages shield by amount.
-     * 
+     *
      * Return damage that broke through the shield.
      */
     public int damageShield(int amount) {
