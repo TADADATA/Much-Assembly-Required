@@ -42,12 +42,14 @@ public class CubotFloppyDrive extends CubotHardwareModule {
 
 
         if(super.cubot.getWorld().getTileMap().getTileIdAt(super.cubot.getX(), super.cubot.getY()) == TileMagnet.ID){
-          System.out.println("on magnetic tile");
+          System.out.println("On magnetic tile. FloppyDisk memory hash before process: "+floppyDisk.getMemoryHash());
           if(floppyDisk != null){
             floppyDisk.corruptFloppyDisk(corruptionBlockSize);
+            System.out.println("On magnetic tile. FloppyDisk memory hash after process: "+floppyDisk.getMemoryHash());
           }
         }else{
-          System.out.println("not on magnetic tile");
+          System.out.println("On magnetic tile. FloppyDisk memory hash before process: "+floppyDisk.getMemoryHash());
+          System.out.println("On magnetic tile. FloppyDisk memory hash after process: "+floppyDisk.getMemoryHash());
         }
 
         int a = getCpu().getRegisterSet().getRegister("A").getValue();
