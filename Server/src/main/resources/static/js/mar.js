@@ -1597,7 +1597,7 @@ var PuddleTile = (function (_super) {
         _this.tileType = "puddle";
         return _this;
     }
-    return ShortCircuitTile;
+    return PuddleTile;
 }(Tile));
 var CopperTile = (function (_super) {
     __extends(CopperTile, _super);
