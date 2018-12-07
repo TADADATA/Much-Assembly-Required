@@ -30,6 +30,7 @@ public class World implements MongoSerializable {
     private static final char INFO_IRON = 0x0200;
     private static final char INFO_COPPER = 0x0100;
     private static final char INFO_MAGNET = 0x0150; //0x0150 ??
+    private static final char INFO_SHORTCIRCUIT = 0x0300; // randomly
 
     private int x;
     private int y;
@@ -276,6 +277,8 @@ public class World implements MongoSerializable {
                     mapInfo[x][y] = INFO_IRON;
                 } else if (tileMap.getTileIdAt(x,y) == TileMagnet.ID) {
                     mapInfo[x][y] = INFO_MAGNET;
+                }else if (tileMap.getTileIdAt(x, y) == TileShortCircuit.ID) {
+                    mapInfo[x][y] = INFO_SHORTCIRCUIT;
                 }
             }
         }

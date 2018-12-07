@@ -266,6 +266,8 @@ var DEBUG = true;
 var config = {
     textMagnet: "#434341",// change color
     tileMagnetTint: 0xFFFFFF,//change color
+    textShortCircuit: "#6242f4",
+    tileShortCircuitTint:0xFFFFFF,
     portalTint: 0xff43c8,
     tileTint: 0xFFFFFF,
     wallTint: 0xDDDDDD,
@@ -1436,6 +1438,7 @@ var TileType;
     TileType[TileType["VAULT_WALL"] = 5] = "VAULT_WALL";
     TileType[TileType["FLUID"] = 6] = "FLUID";
     TileType[TileType["MAGNETIC"] = 12] = "MAGNETIC";
+    TileType[TileType["SHORTCIRCUIT"] = 11] = "SHORTCIRCUIT";
 })(TileType || (TileType = {}));
 var Tile = (function (_super) {
     __extends(Tile, _super);
@@ -1465,6 +1468,8 @@ var Tile = (function (_super) {
                 return new FluidTile(x, y);
             case TileType.MAGNETIC:
                 return new MagneticTile(x, y);
+            case TileType.SHORTCIRCUIT:
+                return new ShortCircuitTile(x, y);
             case TileType.PLAIN:
             default:
                 return new PlainTile(x, y);
@@ -1585,6 +1590,18 @@ var MagneticTile = (function (_super) {
         return _this;
     }
     return MagneticTile;
+}(Tile));
+var ShortCircuitTile = (function (_super) {
+    __extends(ShortCircuitTile, _super);
+    function ShortCircuitTile(x, y) {
+        var _this = _super.call(this, x, y, config.plainSprite, 0) || this;
+        _this.baseTint = config.tileShortCircuitTint;
+        _this.tint = _this.baseTint;
+        _this.setText("SHORTCIRCUIT", config.textShortCircuit);
+        _this.tileType = "shortcircuit";
+        return _this;
+    }
+    return ShortCircuitTile;
 }(Tile));
 var IronTile = (function (_super) {
     __extends(IronTile, _super);

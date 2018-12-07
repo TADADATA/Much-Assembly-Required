@@ -8,6 +8,8 @@ let DEBUG: boolean = true;
 let config = {
     textMagnet: "#434341",
     tileMagnetTint: 0xFFFFFF,
+    textShortCircuit: "#6242f4",
+    tileShortCircuitTint:0xFFFFFF,
     portalTint: 0xff43c8,
     tileTint: 0xFFFFFF,
     wallTint: 0xDDDDDD,

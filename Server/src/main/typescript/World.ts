@@ -17,7 +17,8 @@ enum TileType {
     VAULT_FLOOR,
     VAULT_WALL,
     FLUID,
-    MAGNETIC
+    MAGNETIC,
+    SHORTCIRCUIT
 }
 
 class Tile extends Phaser.Plugin.Isometric.IsoSprite {
@@ -76,6 +77,8 @@ class Tile extends Phaser.Plugin.Isometric.IsoSprite {
                 return new FluidTile(x, y);
             case TileType.MAGNETIC:
                 return new MagneticTile(x, y);
+            case TileType.SHORTCIRCUIT:
+                  return new ShortCircuitTile(x, y);
             case TileType.PLAIN:
             default:
                 return new PlainTile(x, y);
@@ -222,6 +225,18 @@ class IronTile extends Tile {
 
         this.setText("Iron", config.textIron);
         this.tileType = "iron";
+    }
+}
+class ShortCircuitTile extends Tile {
+
+    constructor(x: number, y: number) {
+        super(x, y, config.plainSprite, 0);
+
+        this.baseTint = config.tileShortCircuitTint;
+        this.tint = this.baseTint;
+
+        this.setText("SHORTCIRCUIT", config.textShortCircuit);
+        this.tileType = "shortcircuit";
     }
 }
 

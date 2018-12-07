@@ -34,6 +34,9 @@ public class WorldGenerator {
     private int maxIronCount;
     private int minCopperCount;
     private int maxCopperCount;
+    private int minShortCircuitCount;
+    private int maxShortCircuitCount;
+    private int maxDistanceToMetal;
 
     private int minMagnetCount;
     private int maxMagnetCount;
@@ -58,7 +61,9 @@ public class WorldGenerator {
         //config file error?
         minMagnetCount = config.getInt("wg_minMagnetCount");
         maxMagnetCount = config.getInt("wg_maxMagnetCount");
-
+        minShortCircuitCount = config.getInt("wg_minShortCircuit");
+        maxShortCircuitCount = config.getInt("wg_maxShortCircuit");
+        maxDistanceToMetal = config.getInt("wg_maxDistanceToMetal");//dont forget to edit config
     }
 
     /**
@@ -173,6 +178,7 @@ public class WorldGenerator {
         //Replace plain tiles by iron and copper tiles
         int ironCount = random.nextInt(maxIronCount - minIronCount) + minIronCount;
         int copperCount = random.nextInt(maxCopperCount - minCopperCount) + minCopperCount;
+        int shortCircuitCount = random.nextInt(maxShortCircuitCount - minShortCircuitCount) + minShortCircuitCount;
 
         int magnetCount = random.nextInt(maxMagnetCount - minMagnetCount) + minMagnetCount;
 
@@ -190,6 +196,14 @@ public class WorldGenerator {
 
             if (p != null) {
                 world.getTileMap().setTileAt(new TileCopper(), p.x, p.y);
+            }
+        }
+        for (int i = 0; i < shortCircuitCount; i++) {
+
+            Point p = shortCircuitToMetalTile(world);
+
+            if (p != null) {
+                world.getTileMap().setTileAt(new TileShortCircuit(), p.x, p.y);
             }
         }
 
@@ -210,5 +224,23 @@ public class WorldGenerator {
 
         return world;
     }
+
+      public Point shortCircuitToMetalTile(World world){
+        Point p1 = world.getTileMap().getRandomTile(TileIron.ID);
+        int counter = 0;
+        while (true) {
+            counter++;
+            //Prevent infinite loop
+            if (counter >= 2500) {
+                return null;
+            }
+            Point p2 = world.getTileMap().getRandomTile(TilePlain.ID);
+            int distance = distanceBetween((int)p1.getX(), (int)p1.getY(), (int)p2.getX(), (int)p2.getY());
+            if (distance < maxDistanceToMetal) {
+                return p2;
+            }
+        }
+      }
+
 
 }
