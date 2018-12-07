@@ -48,8 +48,8 @@ public class CubotFloppyDrive extends CubotHardwareModule {
             System.out.println("On magnetic tile. FloppyDisk memory hash after process: "+floppyDisk.getMemoryHash());
           }
         }else{
-          System.out.println("On magnetic tile. FloppyDisk memory hash before process: "+floppyDisk.getMemoryHash());
-          System.out.println("On magnetic tile. FloppyDisk memory hash after process: "+floppyDisk.getMemoryHash());
+          System.out.println("Not on magnetic tile. FloppyDisk memory hash before process: "+floppyDisk.getMemoryHash());
+          System.out.println("Not on magnetic tile. FloppyDisk memory hash after process: "+floppyDisk.getMemoryHash());
         }
 
         int a = getCpu().getRegisterSet().getRegister("A").getValue();
