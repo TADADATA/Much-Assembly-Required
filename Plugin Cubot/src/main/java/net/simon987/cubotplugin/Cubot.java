@@ -10,6 +10,7 @@ import net.simon987.server.assembly.exception.CancelledException;
 import net.simon987.server.game.item.Item;
 import net.simon987.server.game.item.ItemVoid;
 import net.simon987.server.game.objects.*;
+import net.simon987.server.game.world.*;
 import net.simon987.server.user.User;
 import org.bson.Document;
 import org.json.simple.JSONObject;
@@ -228,6 +229,13 @@ public class Cubot extends GameObject implements Updatable, ControllableUnit, Me
         storeEnergy((int) (SOLAR_PANEL_MULTIPLIER * GameServer.INSTANCE.getDayNightCycle().getSunIntensity()));
 
         if (currentAction == Action.WALKING) {
+        	
+        	int id = getWorld().getTileMap().getTileIdAt(getX(),getY());
+            if(id==TilePuddle.ID){
+             System.out.println("Cubot died!");
+             setDead(true);
+             onDeadCallback();
+            }
             if (spendEnergy(100)) {
                 if (!incrementLocation()) {
                     //Couldn't walk
