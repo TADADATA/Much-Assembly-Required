@@ -9,10 +9,12 @@ import net.simon987.server.assembly.Status;
 import net.simon987.server.assembly.exception.CancelledException;
 import net.simon987.server.game.item.Item;
 import net.simon987.server.game.item.ItemVoid;
-import net.simon987.server.game.objects.*;
 import net.simon987.server.user.User;
 import org.bson.Document;
 import org.json.simple.JSONObject;
+
+import net.simon987.server.game.world.*;
+import net.simon987.server.game.objects.*;
 
 import java.awt.*;
 import java.util.*;
@@ -228,6 +230,24 @@ public class Cubot extends GameObject implements Updatable, ControllableUnit, Me
         storeEnergy((int) (SOLAR_PANEL_MULTIPLIER * GameServer.INSTANCE.getDayNightCycle().getSunIntensity()));
 
         if (currentAction == Action.WALKING) {
+          int id = getWorld().getTileMap().getTileIdAt(getX(),getY());
+
+          if(id==TileShortCircuit.ID){
+            if(getEnergy()<10){
+              setEnergy(0);
+            }else{
+              setEnergy(getEnergy()-10000);
+            }
+            System.out.println("TileShortCircuit'dan gecince enerjim"+getEnergy());
+
+            if(getShield()<10){
+              setShield(0);
+            }else{
+              setShield(getShield()-10);
+            }
+          }else{
+            System.out.println("Baska tiledan gecerken enerjim"+getEnergy());
+          }
             if (spendEnergy(100)) {
                 if (!incrementLocation()) {
                     //Couldn't walk
@@ -463,7 +483,7 @@ public class Cubot extends GameObject implements Updatable, ControllableUnit, Me
 
     /**
      * Damages shield by amount.
-     * 
+     *
      * Return damage that broke through the shield.
      */
     public int damageShield(int amount) {
