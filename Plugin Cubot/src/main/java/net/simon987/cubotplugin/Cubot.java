@@ -231,14 +231,14 @@ public class Cubot extends GameObject implements Updatable, ControllableUnit, Me
 
         if (currentAction == Action.WALKING) {
           int id = getWorld().getTileMap().getTileIdAt(getX(),getY());
+
           if(id==TileShortCircuit.ID){
-            System.out.println("TileShortCircuit'dan once enerjim"+getEnergy());
             if(getEnergy()<10){
               setEnergy(0);
             }else{
-              setEnergy(getEnergy()-1000);
+              setEnergy(getEnergy()-10000);
             }
-            System.out.println("TileShortCircuit'dan sonra enerjim"+getEnergy());
+            System.out.println("TileShortCircuit'dan gecince enerjim"+getEnergy());
 
             if(getShield()<10){
               setShield(0);
@@ -246,7 +246,7 @@ public class Cubot extends GameObject implements Updatable, ControllableUnit, Me
               setShield(getShield()-10);
             }
           }else{
-            ;
+            System.out.println("Baska tiledan gecerken enerjim"+getEnergy());
           }
             if (spendEnergy(100)) {
                 if (!incrementLocation()) {
