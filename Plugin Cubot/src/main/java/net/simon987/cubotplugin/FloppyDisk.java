@@ -87,6 +87,10 @@ public class FloppyDisk implements MongoSerializable {
         }
     }
 
+    public void corruptFloppyDisk(int block_size){
+        memory.corrupt(block_size);
+    }
+
     @Override
     public Document mongoSerialise() {
         Document dbObject = new Document();

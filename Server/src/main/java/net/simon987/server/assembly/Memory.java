@@ -17,7 +17,9 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.Inflater;
 import java.util.zip.InflaterOutputStream;
-
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Formatter;
 /**
  * Represents the available memory for a CPU in the game universe
  */
@@ -114,7 +116,7 @@ public class Memory implements Target, MongoSerializable {
 
     /**
      * Configurably corrupt memory
-     * 
+     *
      * @param blockSize Block size (in words) in which to randomly flip one bit
      */
      public void corrupt(int blockSize) {
@@ -132,7 +134,7 @@ public class Memory implements Target, MongoSerializable {
                  // Calculate bitmask by left-shifting 1 by a random value between 0 and 15
                  int bitmask = 1 << rand.nextInt(16);
 
-                 // Flip the bit with XOR	
+                 // Flip the bit with XOR
                  words[address] ^= bitmask;
              }
          }
@@ -154,6 +156,28 @@ public class Memory implements Target, MongoSerializable {
         ByteBuffer.wrap(bytes).order(ByteOrder.BIG_ENDIAN).asCharBuffer().put(words);
 
         return bytes;
+    }
+
+    public String SHAsum(byte[] convertme) throws NoSuchAlgorithmException{
+      MessageDigest md = MessageDigest.getInstance("SHA-1");
+      return byteArray2Hex(md.digest(convertme));
+    }
+
+    private String byteArray2Hex(final byte[] hash) {
+      Formatter formatter = new Formatter();
+      for (byte b : hash) {
+          formatter.format("%02x", b);
+        }
+      return formatter.toString();
+    }
+
+    public String getMemoryHash(){
+      try{
+        return SHAsum(getBytes());
+      }catch(Exception e){
+        System.err.println("Error in memory hash.");
+      }
+      return null;
     }
 
     @Override
